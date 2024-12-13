@@ -4,6 +4,8 @@ namespace App\Domains\Products\Commands;
 
 use Illuminate\Console\Command;
 use App\Domains\Products\Models\Product;
+use App\Domains\Products\Models\Category;
+use App\Domains\Products\Actions\CreateProductAction;
 
 class StoreProduct extends Command
 {
@@ -30,28 +32,42 @@ class StoreProduct extends Command
     */
     public function handle()
     {
-        // Retrieve input arguments
-        $category_id = $this->argument('category_id');
-        $name = $this->argument('name');
-        $description = $this->argument('description') ?? 'No description provided';
-        $price = $this->argument('price');
+        try {
+            // Retrieve input arguments
+            $category_id = $this->argument('category_id');
+            $name = $this->argument('name');
+            $description = $this->argument('description') ?? 'No description provided';
+            $price = $this->argument('price');
 
-        // Validate price
-        if (!is_numeric($price) || $price <= 0) {
-            $this->error('The price must be a positive number.');
-            return 1; // Exit with error
+            // Validate price
+            if (!is_numeric($price) || $price <= 0) {
+                $this->error('The price must be a positive number.');
+                return 1; // Exit with error
+            }
+
+            // Validasi
+            $validated = validator([
+                'category_id' => $category_id,
+                'name' => $name,
+                'description' => $description,
+                'price' => $price,
+            ], [
+                'category_id' => 'required|numeric',
+                'name' => 'required|string|unique:products,name',
+                'description' => 'nullable|string',
+                'price' => 'required|numeric|min:0.01',
+            ])->validate();
+
+            // Simpan produk
+            $product = Product::create($validated);
+
+            $this->info("Product '{$product->name}' has been created successfully!");
+
+            return 0;
+        } catch (\Throwable $th) {
+            $this->error($th->getMessage());
+
+            return 0;
         }
-
-        // Create a new product
-        $product = Product::create([
-            'category_id' => $category_id,
-            'name' => $name,
-            'description' => $description,
-            'price' => $price,
-        ]);
-
-        $this->info("Product '{$product->name}' has been created successfully!");
-
-        return 0; // Exit with success
     }
 }
