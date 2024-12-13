@@ -15,7 +15,7 @@ class StoreProduct extends Command
     protected $signature = 'product:store
     {category_id : The name of the product}
     {name : The name of the product}
-    {description? : The description of the product}
+    {description : The description of the product}
     {price : The price of the product}';
 
     /**
