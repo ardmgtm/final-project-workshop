@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreCategoryRequest;
-use App\Models\Category;
+use App\Domains\Products\Requests\StoreCategoryRequest;
+use App\Domains\Products\Models\Category;
 
 class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::all()
-            ->map
-            ->toData();
+        $categories = Category::all();
 
         return [
             'data' => $categories,

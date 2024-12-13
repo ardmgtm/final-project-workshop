@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\CreateProductAction;
+use App\Domains\Products\Actions\CreateProductAction;
 use App\Domains\Products\Requests\GetProductsRequest;
 use App\Domains\Products\Requests\StoreProductRequest;
 use App\Domains\Products\Models\Category;
@@ -20,13 +20,13 @@ class ProductController extends Controller
         );
 
         return [
-            'data' => $products->map->toData(),
+            'data' => $products,
         ];
     }
 
     public function get(Product $product)
     {
-        return ['data' => $product->toData()];
+        return ['data' => $product];
     }
 
     public function store(StoreProductRequest $request, CreateProductAction $createProduct)
@@ -39,7 +39,7 @@ class ProductController extends Controller
         );
 
         return response([
-            'data' => $product->toData()
+            'data' => $product
         ], Response::HTTP_CREATED);
     }
 }
