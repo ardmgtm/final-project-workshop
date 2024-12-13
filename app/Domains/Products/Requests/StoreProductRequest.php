@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Domains\Products\Requests;
 
 class StoreProductRequest extends ApiFormRequest
 {

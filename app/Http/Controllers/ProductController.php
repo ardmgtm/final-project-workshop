@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Actions\CreateProductAction;
-use App\Http\Requests\GetProductsRequest;
-use App\Http\Requests\StoreProductRequest;
-use App\Models\Category;
-use App\Models\Product;
+use App\Domains\Products\Requests\GetProductsRequest;
+use App\Domains\Products\Requests\StoreProductRequest;
+use App\Domains\Products\Models\Category;
+use App\Domains\Products\Models\Product;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller

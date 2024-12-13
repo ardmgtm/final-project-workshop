@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Builders;
+namespace App\Domains\Products\Builders;
 
-use App\Models\Product;
+use App\Domains\Products\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
