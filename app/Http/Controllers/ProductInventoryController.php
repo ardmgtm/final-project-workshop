@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Domains\Products\Models\Inventory;
 use App\Domains\Products\Models\Product;
-use App\Http\Requests\GetProductInventoryRequest;
+use App\Domains\Products\Requests\GetProductInventoryRequest;
 
 class ProductInventoryController extends Controller
 {
-    public function index(GetProductInventoryRequest $request)
+    public function index()
     {
-        $products = Product::find($request->getProductIds());
+        $products = Product::all();
 
         $inventories = Inventory::totalQuantities($products);
 
