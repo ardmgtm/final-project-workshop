@@ -12,7 +12,7 @@ class DecreaseProductQuantityAction
         if ($inventory) {
             $inventory = $inventory->update([
                 'product_id' => $productId,
-                'quantity' => $quantity + $quantity,
+                'quantity' => $inventory->quantity - $quantity,
             ]);
         }
     }
