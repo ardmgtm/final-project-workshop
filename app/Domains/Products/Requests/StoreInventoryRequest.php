@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Domains\Products\Requests;
 
 use App\Domains\Products\Requests\ApiFormRequest;
 
@@ -11,11 +11,6 @@ class StoreInventoryRequest extends ApiFormRequest
         return $this->productId;
     }
 
-    public function getWarehouseId(): int
-    {
-        return $this->warehouseId;
-    }
-
     public function getQuantity(): float
     {
         return $this->quantity;
@@ -24,8 +19,7 @@ class StoreInventoryRequest extends ApiFormRequest
     public function rules()
     {
         return [
-            'productId' => 'required|exists:products,id',
-            'warehouseId' => 'required|exists:warehouses,id',
+            'productId' => 'required|numeric',
             'quantity' => 'required|numeric|min:1',
         ];
     }

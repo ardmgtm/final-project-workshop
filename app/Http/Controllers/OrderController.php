@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domains\Orders\Actions\CreateOrderAction;
-use App\Exceptions\ProductInventoryExceededException;
 use App\Domains\Orders\Requests\StoreOrderRequest;
-use App\Domains\Orders\Resources\OrderResource;
 use App\Domains\Products\Models\Product;
 use App\Domains\Orders\Models\Order;
 use Symfony\Component\HttpFoundation\Response;

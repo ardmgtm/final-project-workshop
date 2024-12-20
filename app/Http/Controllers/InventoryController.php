@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Domains\Products\Actions\CreateInventoryAction;
 use App\Domains\Products\Models\Product;
-use App\Http\Requests\StoreInventoryRequest;
+use App\Domains\Products\Requests\StoreInventoryRequest;
 use Illuminate\Http\Response;
 
 class InventoryController extends Controller

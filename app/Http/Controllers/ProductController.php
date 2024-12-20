@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Domains\Products\Actions\CreateProductAction;
-use App\Domains\Products\Requests\GetProductsRequest;
 use App\Domains\Products\Requests\StoreProductRequest;
 use App\Domains\Products\Models\Category;
 use App\Domains\Products\Models\Product;
@@ -11,13 +10,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller
 {
-    public function index(GetProductsRequest $request)
+    public function index()
     {
-        $products = Product::search(
-            $request->getSearchTerm(),
-            $request->getSortBy(),
-            $request->getSortDirection(),
-        );
+        $products = Product::all();
 
         return [
             'data' => $products,
