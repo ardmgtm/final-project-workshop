@@ -1,25 +1,39 @@
 <?php
 
-namespace App\Services;
+namespace App\Domains\Orders\Services;
 
-use App\Domains\Products\Models\Product;
-use GuzzleHttp\Client;
+use App\Domains\Orders\Data\OrderData;
+use App\Events\OrderCreated;
+use App\Models\Order;
+use Illuminate\Support\Facades\DB;
 
-class OrderService
+final readonly class OrderService
 {
-    public function __construct(private Client $httpClient, private string $apiUrl)
+    public function __construct(
+        private Order $order
+    ) {}
+
+    public function get()
     {
+        return OrderData::collect($this->order->get());
     }
 
-    public function getTotalInventory(Product $product): float
+    public function store(OrderData $data): Order
     {
-        $content = $this->httpClient
-            ->get($this->apiUrl . "inventory/products/$product->id")
-            ->getBody()
-            ->getContents();
+        DB::beginTransaction();
+        try {
+            $order = $this->order->create([
+                'product_id' => $data->product_id,
+                'quantity' => $data->quantity,
+            ]);
+            $data = OrderData::from($order);
+            OrderCreated::dispatch($data);
+            DB::commit();
 
-        $data = json_decode($content, true);
-
-        return (float) $data['data']['totalInventory'];
+            return $order;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
     }
 }

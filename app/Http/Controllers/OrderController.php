@@ -2,36 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Domains\Orders\Actions\CreateOrderAction;
-use App\Exceptions\ProductInventoryExceededException;
-use App\Domains\Orders\Requests\StoreOrderRequest;
-use App\Domains\Orders\Resources\OrderResource;
-use App\Domains\Products\Models\Product;
-use App\Domains\Orders\Models\Order;
-use Symfony\Component\HttpFoundation\Response;
+use App\Domains\Orders\Data\OrderData;
+use App\Domains\Orders\Services\OrderService;
+use App\Http\Requests\OrderRequest;
 
 class OrderController extends Controller
 {
-    public function get(Order $order)
+    public function __construct(
+        private readonly OrderService $orderService
+    ) {}
+
+    public function index()
     {
-        return ['data' => $order];
+        return $this->orderService->get();
     }
 
-    public function store(StoreOrderRequest $request, CreateOrderAction $createOrder)
+    public function store(OrderRequest $request)
     {
-        try {
-            $order = $createOrder->execute(
-                Product::findOrFail($request->getProductId()),
-                $request->getQuantity(),
-            );
-
-            return response([
-                'data' => $order
-            ], Response::HTTP_CREATED);
-        } catch (\Throwable $th) {
-            return response([
-                'errors' => ['quantity' => $th->getMessage()]
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
+        return $this->orderService->store(OrderData::fromRequest($request));
     }
 }

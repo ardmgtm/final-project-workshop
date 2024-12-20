@@ -2,44 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Domains\Products\Actions\CreateProductAction;
-use App\Domains\Products\Requests\GetProductsRequest;
-use App\Domains\Products\Requests\StoreProductRequest;
-use App\Domains\Products\Models\Category;
-use App\Domains\Products\Models\Product;
-use Symfony\Component\HttpFoundation\Response;
+use App\Domains\Products\Data\OrderData;
+use App\Domains\Products\Data\ProductData;
+use App\Domains\Products\Services\OrderService;
+use App\Domains\Products\Services\ProductService;
+use App\Http\Requests\ProductRequest;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
-    public function index(GetProductsRequest $request)
-    {
-        $products = Product::search(
-            $request->getSearchTerm(),
-            $request->getSortBy(),
-            $request->getSortDirection(),
-        );
+    public function __construct(
+        private readonly ProductService $productService
+    ) {}
 
-        return [
-            'data' => $products,
-        ];
+    public function index()
+    {
+        return $this->productService->get();
     }
 
-    public function get(Product $product)
+    public function store(ProductRequest $request)
     {
-        return ['data' => $product];
-    }
-
-    public function store(StoreProductRequest $request, CreateProductAction $createProduct)
-    {
-        $product = $createProduct->execute(
-            Category::findOrFail($request->getCategoryId()),
-            $request->getName(),
-            $request->getDescription(),
-            $request->getPrice()
-        );
-
-        return response([
-            'data' => $product
-        ], Response::HTTP_CREATED);
+        return $this->productService->store(ProductData::fromRequest($request));
     }
 }
