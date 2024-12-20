@@ -14,7 +14,7 @@ class CreateInventoriesTable extends Migration
             $table->float('quantity')->nullable(false);
             $table->timestamps();
 
-            $table->unique(['product_id', 'warehouse_id']);
+            $table->unique(['product_id']);
         });
     }
 

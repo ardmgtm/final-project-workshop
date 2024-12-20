@@ -12,6 +12,8 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\TestCase;
 
 #[CoversClass(CreateOrderAction::class)]
+#[CoversClass(Order::class)]
+#[CoversClass(Product::class)]
 class CreateOrderActionTest extends TestCase
 {
     use RefreshDatabase;

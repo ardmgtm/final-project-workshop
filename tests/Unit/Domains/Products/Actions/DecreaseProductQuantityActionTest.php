@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Domains\Products\Actions;
 
 use App\Domains\Products\Actions\DecreaseProductQuantityAction;
 use App\Domains\Products\Models\Inventory;
@@ -9,11 +9,12 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\TestCase;
 
 #[CoversClass(DecreaseProductQuantityAction::class)]
+#[CoversClass(Inventory::class)]
 class DecreaseProductQuantityActionTest extends TestCase
 {
     use RefreshDatabase; // Refresh the database for each test
 
-    public function it_decreases_the_product_quantity_in_inventory()
+    public function test_it_decreases_the_product_quantity_in_inventory()
     {
         // Arrange: Create a product with an initial quantity
         $productId = 1;
@@ -29,7 +30,7 @@ class DecreaseProductQuantityActionTest extends TestCase
         $this->assertEquals(7, $inventory->quantity); // 10 - 3
     }
 
-    public function it_does_not_decrease_the_quantity_below_zero()
+    public function test_it_does_not_decrease_the_quantity_below_zero()
     {
         // Arrange: Create a product with a quantity of 2
         $productId = 2;

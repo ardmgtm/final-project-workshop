@@ -12,19 +12,6 @@ class Product extends Model
 
     protected $guarded = [];
 
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
-
-    public function getPriceFormattedAttribute(): string
-    {
-        return '$' . number_format($this->price, 2);
-    }
-
-    /**
-     * Create a new factory instance for the model.
-     */
     protected static function newFactory()
     {
         return ProductFactory::new();

@@ -12,9 +12,6 @@ class Order extends Model
     
     protected $guarded = [];
 
-    /**
-     * Create a new factory instance for the model.
-     */
     protected static function newFactory()
     {
         return OrderFactory::new();

@@ -10,6 +10,8 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\TestCase;
 
 #[CoversClass(CreateProductAction::class)]
+#[CoversClass(Category::class)]
+#[CoversClass(Product::class)]
 class CreateProductActionTest extends TestCase
 {
     use RefreshDatabase;

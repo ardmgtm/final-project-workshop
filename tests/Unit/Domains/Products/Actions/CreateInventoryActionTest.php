@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Domains\Products\Actions;
 
 use App\Domains\Products\Actions\CreateInventoryAction;
 use App\Domains\Products\Models\Inventory;
@@ -10,11 +10,14 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\TestCase;
 
 #[CoversClass(CreateInventoryAction::class)]
+#[CoversClass(Inventory::class)]
+#[CoversClass(Product::class)]
+#[CoversClass(CreateInventoryAction::class)]
 class CreateInventoryActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function it_creates_an_inventory_when_none_exists()
+    public function test_it_creates_an_inventory_when_none_exists()
     {
         // Arrange
         $product = Product::factory()->create(); // Using model factory to create a product
@@ -32,7 +35,7 @@ class CreateInventoryActionTest extends TestCase
         $this->assertInstanceOf(Inventory::class, $inventory);
     }
 
-    public function it_updates_an_existing_inventory()
+    public function test_it_updates_an_existing_inventory()
     {
         // Arrange
         $product = Product::factory()->create();
