@@ -36,7 +36,7 @@ jobs:
 
       - name: Create SQLite Database
         run: |
-          touch database/database.sqlite
+          touch /var/www/html/database/database.sqlite
 
       - name: Setup Laravel
         run: |
