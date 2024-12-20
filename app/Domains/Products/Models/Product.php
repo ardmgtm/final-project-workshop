@@ -2,7 +2,7 @@
 
 namespace App\Domains\Products\Models;
 
-use App\Domains\Products\Builders\ProductBuilder;
+use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,8 +22,11 @@ class Product extends Model
         return '$' . number_format($this->price, 2);
     }
 
-    public function newEloquentBuilder($query)
+    /**
+     * Create a new factory instance for the model.
+     */
+    protected static function newFactory()
     {
-        return new ProductBuilder($query);
+        return ProductFactory::new();
     }
 }
