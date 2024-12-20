@@ -11,7 +11,6 @@ class InventoryData extends Data
 {
     public function __construct(
         public int $product_id,
-        public int $warehouse_id,
         public int $stock,
     ) {}
 
@@ -19,7 +18,6 @@ class InventoryData extends Data
     {
         return new self(
             product_id: $request->product_id,
-            warehouse_id: $request->warehouse_id,
             stock: $request->stock,
         );
     }

@@ -12,7 +12,6 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->foreignId('product_id');
             $table->float('quantity')->nullable(false);
-            $table->float('total_price')->nullable(false);
             $table->timestamps();
         });
     }

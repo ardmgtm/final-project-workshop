@@ -21,7 +21,6 @@ final readonly class InventoryService
     {
         return $this->inventory->create([
             'product_id' => $data->product_id,
-            'warehouse_id' => $data->warehouse_id,
             'stock' => $data->stock,
         ]);
     }
