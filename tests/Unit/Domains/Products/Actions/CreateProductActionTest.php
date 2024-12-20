@@ -16,36 +16,20 @@ class CreateProductActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_execute_creates_product()
+    public function it_creates_a_product()
     {
-        // Arrange
+        // Arrange: Create a category
         $category = Category::factory()->create();
-        $name = 'Test Product';
-        $description = 'This is a test product.';
-        $price = 29.99;
 
-        // Creating a mock for CreateProductAction
-        $action = $this->createMock(CreateProductAction::class);
-        
-        // Setting up the expectation for the execute method
-        $action->expects($this->once())
-               ->method('execute')
-               ->with($category, $name, $description, $price)
-               ->willReturn(new Product([
-                   'category_id' => $category->id,
-                   'name' => $name,
-                   'description' => $description,
-                   'price' => $price,
-               ]));
+        // Action: Execute the CreateProductAction
+        $action = new CreateProductAction();
+        $product = $action->execute($category, 'Test Product', 'This is a test product', 99.99);
 
-        // Act
-        $product = $action->execute($category, $name, $description, $price);
-
-        // Assert
+        // Assert: Check that the product was created successfully
         $this->assertInstanceOf(Product::class, $product);
+        $this->assertEquals('Test Product', $product->name);
+        $this->assertEquals('This is a test product', $product->description);
+        $this->assertEquals(99.99, $product->price);
         $this->assertEquals($category->id, $product->category_id);
-        $this->assertEquals($name, $product->name);
-        $this->assertEquals($description, $product->description);
-        $this->assertEquals($price, $product->price);
     }
 }
