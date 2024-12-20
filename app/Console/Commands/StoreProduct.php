@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Domains\Products\Commands;
+namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Domains\Products\Models\Product;
 use App\Domains\Products\Models\Category;
 use App\Domains\Products\Actions\CreateProductAction;
 
@@ -14,7 +13,7 @@ class StoreProduct extends Command
     *
     * @var string
     */
-    protected $signature = 'product:store
+    protected $signature = 'app:store-product
     {category_id : The name of the product}
     {name : The name of the product}
     {description : The description of the product}
@@ -30,7 +29,7 @@ class StoreProduct extends Command
     /**
     * Execute the console command.
     */
-    public function handle()
+    public function handle(CreateProductAction $createProductAction)
     {
         try {
             // Retrieve input arguments
@@ -45,21 +44,11 @@ class StoreProduct extends Command
                 return 1; // Exit with error
             }
 
-            // Validasi
-            $validated = validator([
-                'category_id' => $category_id,
-                'name' => $name,
-                'description' => $description,
-                'price' => $price,
-            ], [
-                'category_id' => 'required|numeric',
-                'name' => 'required|string|unique:products,name',
-                'description' => 'nullable|string',
-                'price' => 'required|numeric|min:0.01',
-            ])->validate();
-
             // Simpan produk
-            $product = Product::create($validated);
+            $product = $createProductAction->execute(
+                Category::findOrFail($category_id),
+                $name,$description,$price
+            );
 
             $this->info("Product '{$product->name}' has been created successfully!");
 
