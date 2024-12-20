@@ -8,7 +8,7 @@ class DecreaseProductQuantityAction
 {
     public function execute(int $productId, int $quantity): void
     {
-        $inventory = Inventory::where(['product_id', $productId])->first();
+        $inventory = Inventory::where('product_id', $productId)->first();
         if ($inventory) {
             $inventory = $inventory->update([
                 'product_id' => $productId,
