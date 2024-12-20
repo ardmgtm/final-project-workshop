@@ -16,7 +16,7 @@ class CreateProductActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function it_creates_a_product()
+    public function test_it_creates_a_product()
     {
         // Arrange: Create a category
         $category = Category::factory()->create();
