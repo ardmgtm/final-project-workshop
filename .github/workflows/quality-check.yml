@@ -34,6 +34,10 @@ jobs:
           git status
         working-directory: /var/www/html
 
+      - name: Create SQLite Database
+        run: |
+          touch database/database.sqlite
+
       - name: Setup Laravel
         run: |
           cp .env.example .env
@@ -41,6 +45,8 @@ jobs:
           composer install --no-interaction --optimize-autoloader --quiet
           php artisan key:gen
           cp .env .env.testing
+          php artisan migrate
+
         working-directory: /var/www/html
 
       - name: Run Quality Check
