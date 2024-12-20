@@ -11,7 +11,6 @@ class CreateInventoriesTable extends Migration
         Schema::create('inventories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->nullable(false);
-            $table->foreignId('warehouse_id')->nullable(false);
             $table->float('quantity')->nullable(false);
             $table->timestamps();
 
