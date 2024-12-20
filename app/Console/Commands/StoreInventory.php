@@ -31,7 +31,7 @@ class StoreInventory extends Command
     {
         try {
             $product = Product::findOrFail($this->argument('product_id'));
-            $createInventory->execute($product,$this->argument('quantity'));
+            $createInventory->execute($product, $this->argument('quantity'));
             $this->info("inventory for product '{$product->name}' has been created successfully!");
             return 0;
         } catch (\Throwable $th) {

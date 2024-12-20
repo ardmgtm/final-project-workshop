@@ -31,7 +31,7 @@ class CreateOrder extends Command
     {
         try {
             $product = Product::findOrFail($this->argument('product_id'));
-            $createOrder->execute($product,$this->argument('quantity'));
+            $createOrder->execute($product, $this->argument('quantity'));
             $this->info("Order for product '{$product->name}' has been created successfully!");
             return 0;
         } catch (\Throwable $th) {

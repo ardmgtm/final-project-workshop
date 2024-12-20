@@ -9,10 +9,10 @@ use App\Domains\Products\Actions\CreateProductAction;
 class StoreProduct extends Command
 {
     /**
-    * The name and signature of the console command.
-    *
-    * @var string
-    */
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
     protected $signature = 'app:store-product
     {category_id : The name of the product}
     {name : The name of the product}
@@ -20,20 +20,20 @@ class StoreProduct extends Command
     {price : The price of the product}';
 
     /**
-    * The console command description.
-    *
-    * @var string
-    */
+     * The console command description.
+     *
+     * @var string
+     */
     protected $description = 'Store a new product into the database';
 
     /**
-    * Execute the console command.
-    */
+     * Execute the console command.
+     */
     public function handle(CreateProductAction $createProductAction)
     {
         try {
             // Retrieve input arguments
-            $category_id = $this->argument('category_id');
+            $categoryId = $this->argument('category_id');
             $name = $this->argument('name');
             $description = $this->argument('description') ?? 'No description provided';
             $price = $this->argument('price');
@@ -46,8 +46,10 @@ class StoreProduct extends Command
 
             // Simpan produk
             $product = $createProductAction->execute(
-                Category::findOrFail($category_id),
-                $name,$description,$price
+                Category::findOrFail($categoryId),
+                $name,
+                $description,
+                $price
             );
 
             $this->info("Product '{$product->name}' has been created successfully!");
